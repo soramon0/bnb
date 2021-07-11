@@ -1,9 +1,20 @@
 <template>
-  <Tutorial/>
+  <div class="flex justify-between">
+    <home-card v-for="home in homes" :key="home.objectID" :home="home" />
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import HomeCard from '~/components/HomeCard.vue'
+import homes from '~/data/homes.json'
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: { HomeCard },
+  data() {
+    return {
+      homes: homes.slice(0, 3),
+    }
+  },
+})
 </script>
