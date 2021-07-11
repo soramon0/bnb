@@ -6,14 +6,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import HomeCard from '~/components/HomeCard.vue'
 import homes from '~/data/homes.json'
 
 export default Vue.extend({
-  components: { HomeCard },
   data() {
     return {
       homes: homes.slice(0, 3),
+    }
+  },
+  head() {
+    return {
+      title: 'Homepage',
     }
   },
 })
