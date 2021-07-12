@@ -24,6 +24,8 @@
       {{ home.guests }} guests, {{ home.bedrooms }} rooms, {{ home.beds }} beds,
       {{ home.bathrooms }} bath
     </p>
+
+    <div ref="map" style="height: 800px; width: 800px"></div>
   </div>
 </template>
 
@@ -39,7 +41,37 @@ export default {
   head() {
     return {
       title: this.home.title,
+      script: [
+        {
+          src: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyB8fbjno0BJGbdqM79iqpcvvswC78GzLBQ&libraries=places&callback=initMap',
+          hid: 'map',
+          defer: true,
+          skip: process.client && window.mapLoaded,
+        },
+        {
+          innerHTML: 'window.initMap = function() { window.mapLoaded = true }',
+          hid: 'map-init',
+        },
+      ],
     }
+  },
+  mounted() {
+    const mapOptions = {
+      zoom: 18,
+      center: window.google.maps.LatLng(
+        this.home._geoloc.lat,
+        this.home._geoloc.lng
+      ),
+      disableDefaultUI: true,
+      zoomControl: true,
+    }
+    const map = new window.google.maps.Map(this.$refs.map, mapOptions)
+    const position = window.google.maps.LatLng(
+      this.home._geoloc.lat,
+      this.home._geoloc.lng
+    )
+    const marker = new window.google.maps.Marker({ position })
+    marker.setMap(map)
   },
   created() {
     const home = homes.find((home) => home.objectID === this.$route.params.id)
