@@ -12,6 +12,18 @@
     </div>
     <h1>{{ home.title }}</h1>
     <p>{{ home.pricePerNight }} / night</p>
+    <img src="/images/marker.svg" width="20" height="20" alt="marker icon" />
+    <p>
+      {{ home.location.address }} {{ home.location.city }}
+      {{ home.location.state }}
+      {{ home.location.country }}
+    </p>
+    <img src="/images/star.svg" width="20" height="20" alt="star icon" />
+    <p>{{ home.reviewValue }}</p>
+    <p>
+      {{ home.guests }} guests, {{ home.bedrooms }} rooms, {{ home.beds }} beds,
+      {{ home.bathrooms }} bath
+    </p>
   </div>
 </template>
 
@@ -22,6 +34,11 @@ export default {
   data() {
     return {
       home: {},
+    }
+  },
+  head() {
+    return {
+      title: this.home.title,
     }
   },
   created() {

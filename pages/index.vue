@@ -1,6 +1,12 @@
 <template>
   <div class="flex justify-between">
-    <home-card v-for="home in homes" :key="home.objectID" :home="home" />
+    <nuxt-link
+      v-for="home in homes"
+      :key="home.objectID"
+      :to="`/home/${home.objectID}`"
+    >
+      <home-card :home="home" />
+    </nuxt-link>
   </div>
 </template>
 
