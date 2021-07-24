@@ -30,12 +30,13 @@
 </template>
 
 <script>
-import homes from '~/data/homes.json'
-
 export default {
-  data() {
+  async asyncData({ params, $dataApi, error }) {
+    const { data, ok, status, statusText } = await $dataApi.getHome(params.id)
+    if (!ok) return error({ statusCode: status, message: statusText })
+
     return {
-      home: {},
+      home: data,
     }
   },
   head() {
@@ -49,10 +50,6 @@ export default {
       this.home._geoloc.lat,
       this.home._geoloc.lng
     )
-  },
-  created() {
-    const home = homes.find((home) => home.objectID === this.$route.params.id)
-    this.home = home
   },
 }
 </script>
